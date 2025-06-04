@@ -1,0 +1,198 @@
+{
+  "active": false,
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pinecone Vector Store": {
+      "main": [
+        [
+          {
+            "node": "篩選分數",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "篩選分數": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "向量搜尋": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ai回答模組": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-06-03T07:43:15.737Z",
+  "id": "IfOXSLKphRYvtG4X",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Search-RAG.V1",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -900,
+        300
+      ],
+      "id": "892b011c-141a-4cb4-9ed4-def56deef317",
+      "name": "When chat message received",
+      "webhookId": "775239c5-e4d5-4b13-beec-f2f1c8811244"
+    },
+    {
+      "parameters": {
+        "mode": "load",
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "n8ntestnew",
+          "mode": "list",
+          "cachedResultName": "n8ntestnew"
+        },
+        "prompt": "={{ $json.chatInput }}",
+        "topK": 20,
+        "options": {
+          "pineconeNamespace": "V1"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.2,
+      "position": [
+        -680,
+        300
+      ],
+      "id": "67459a1a-0363-4b6d-8dd1-90ab4d560266",
+      "name": "Pinecone Vector Store",
+      "credentials": {
+        "pineconeApi": {
+          "id": "YPrW9DkZh4861Lbt",
+          "name": "PineconeApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.prompt }}",
+        "options": {
+          "systemMessage": "不用傳送思考紀錄，告訴答案就好,\n幫我判斷重點並標粗,\n美化展現格式,\n自主判斷換行，分段，標點符號"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        -100,
+        300
+      ],
+      "id": "db88b075-e4c0-4246-b952-5d22f0a52022",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "jsCode": "const question = $('When chat message received').first().json.chatInput.trim().toLowerCase();\nconst SCORE_THRESHOLD = 0.5;\n\nconst matchedDocs = items\n  .filter(i => i.json.score >= SCORE_THRESHOLD)\n  .map(i => i.json.document.pageContent)\n  .join('\\n\\n');\n\n\nif (!matchedDocs) {\n  return [{\n    json: {\n      answer: `❌ 找不到與「${question}」相關的知識內容，請換個說法或確認資料庫。`\n    }\n  }];\n}\n\nconst prompt = `以下是知識庫內容，請根據這些資料回答問題：\\n\\n${matchedDocs}\\n\\n使用者問題：${question}`;\n\nreturn [{\n  json: { prompt }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -320,
+        300
+      ],
+      "id": "fb9494c0-a40a-4d51-bfa0-7c59291ec572",
+      "name": "篩選分數"
+    },
+    {
+      "parameters": {
+        "modelName": "models/text-embedding-004"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -680,
+        460
+      ],
+      "id": "8d9d7e90-45de-4fa1-ba87-acc1c9124186",
+      "name": "向量搜尋",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "ivjgvmwy5Z6vbCEd",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/learnlm-2.0-flash-experimental",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -100,
+        460
+      ],
+      "id": "cae124fa-d228-4397-8c51-24dad85c6a60",
+      "name": "Ai回答模組",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "ivjgvmwy5Z6vbCEd",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-06-03T07:08:06.178Z",
+      "updatedAt": "2025-06-03T07:08:06.178Z",
+      "id": "JRyNALIm69gzhAvi",
+      "name": "知識庫"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-06-04T05:28:38.000Z",
+  "versionId": "2946d3e3-3e65-48db-b687-22c4c836c951"
+}
