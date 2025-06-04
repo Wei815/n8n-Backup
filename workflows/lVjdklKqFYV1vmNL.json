@@ -1,0 +1,466 @@
+{
+  "active": false,
+  "connections": {
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "轉物件",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "轉物件": {
+      "main": [
+        [
+          {
+            "node": "XX*3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "XX*2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "X*2+WX",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "X+WX",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "XX*2": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "XX*3": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "X+WX": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "X*2+WX": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-06-03T07:07:53.120Z",
+  "id": "lVjdklKqFYV1vmNL",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "RNG",
+  "nodes": [
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1zqJzUaGIEtZS44wQL9hfdSr2diRL_Rt5wycRaEl5AsY",
+          "mode": "list",
+          "cachedResultName": "RNG",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zqJzUaGIEtZS44wQL9hfdSr2diRL_Rt5wycRaEl5AsY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Base",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zqJzUaGIEtZS44wQL9hfdSr2diRL_Rt5wycRaEl5AsY/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        0,
+        300
+      ],
+      "id": "cc541417-d823-495e-9dad-75e121dd4026",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Z5q1lrN1CgiD0Rb8",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a74d6947-698d-43af-959a-fce3bf054b70",
+              "name": "Line",
+              "value": "={{ $json.Line }}",
+              "type": "string"
+            },
+            {
+              "id": "9247c708-bee8-43cd-80be-3e100972c4a7",
+              "name": "R1",
+              "value": "={{ $json.R1 }}",
+              "type": "string"
+            },
+            {
+              "id": "65d50ade-4d03-47ea-b335-181ab8c86b22",
+              "name": "R2",
+              "value": "={{ $json.R2 }}",
+              "type": "string"
+            },
+            {
+              "id": "725d127e-744f-453a-a65c-9d1ed332d1e2",
+              "name": "R3",
+              "value": "={{ $json.R3 }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        160,
+        300
+      ],
+      "id": "1895d992-f4bb-47dc-8edb-9689ce010d0d",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -200,
+        160
+      ],
+      "id": "12aea69b-c021-4df8-9541-3dd83fed0f27",
+      "name": "When chat message received",
+      "webhookId": "a7ce5339-86e7-4cc7-9cc1-c0365b31b034"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "830e88ab-fdcb-478b-b3d1-bf2cfa4f9039",
+              "name": "對照",
+              "value": "={{ $json.chatInput }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "72250ae3-a586-4512-8a38-82d12ab2f71d",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        300,
+        20
+      ],
+      "id": "feca7c18-9ef8-4bc7-ab4b-cdf4c07b1332",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "jsCode": "// 取得用戶輸入的值（假設chatInput是用戶輸入）\nconst chatInput = $input.first().json.a;\n\n// 取得你 Google Sheets（或編輯字段）整理好的所有資料\nconst tableData = $input.all();\n\n// 這時 chatInput 是 \"2\"，tableData 是一個包含多筆資料的陣列\n\n// 你可以直接一起回傳來檢查\nreturn [{\n  json: {\n    input: chatInput,\n    table: tableData.map(item => item.json)\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        20
+      ],
+      "id": "3b958339-f427-4c06-8d9c-3e45b6002519",
+      "name": "轉物件"
+    },
+    {
+      "parameters": {
+        "jsCode": "const table = $input.first().json.table;\nconst keyword = table[0]['對照'];\n\n// R1三行有keyword，且R1/R2/R3這三行都不能有WX\nfunction findR1Block() {\n    for (let i = 1; i <= table.length - 3; i++) {\n        const block = [table[i], table[i+1], table[i+2]];\n        if (!block.some(row => row.R1 === keyword)) continue;\n        if (block.some(row => row.R1 === 'WX' || row.R2 === 'WX' || row.R3 === 'WX')) continue;\n        return { line: block[0].Line, index: i, block };\n    }\n    return null;\n}\n\n// R2三行有keyword、不能有R1區段非keyword的R1值，且三行都不能有WX\nfunction findR2Block(excludeVals) {\n    for (let i = 1; i <= table.length - 3; i++) {\n        const block = [table[i], table[i+1], table[i+2]];\n        if (!block.some(row => row.R2 === keyword)) continue;\n        if (block.some(row => excludeVals.includes(row.R2))) continue;\n        if (block.some(row => row.R1 === 'WX' || row.R2 === 'WX' || row.R3 === 'WX')) continue;\n        return { line: block[0].Line, index: i, block };\n    }\n    return null;\n}\n\n// R3三行有keyword就淘汰、三行都不能有WX\nfunction findR3Block() {\n    for (let i = 1; i <= table.length - 3; i++) {\n        const block = [table[i], table[i+1], table[i+2]];\n        // **新增條件：R3這三行不能有keyword**\n        if (block.some(row => row.R3 === keyword)) continue;\n        if (block.some(row => row.R1 === 'WX' || row.R2 === 'WX' || row.R3 === 'WX')) continue;\n        return { line: block[0].Line, index: i, block };\n    }\n    return null;\n}\n\n// 選R1\nconst blockR1 = findR1Block();\nlet excludeR1 = [];\nif (blockR1) {\n    for (let row of blockR1.block) {\n        if (row.R1 !== keyword) excludeR1.push(row.R1);\n    }\n}\n\n// 選R2（可重疊，無需往下跳）\nconst blockR2 = findR2Block(excludeR1);\n\n// 選R3（可重疊，無需往下跳）\nconst blockR3 = findR3Block();\n\nconst resultArr = [\n    blockR1 ? blockR1.line : '無',\n    blockR2 ? blockR2.line : '無',\n    blockR3 ? blockR3.line : '無'\n];\n\nconst outputString = `[${resultArr.join(',')}]`;\nreturn [{ json: { [keyword + '*2']: outputString } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        600,
+        20
+      ],
+      "id": "c474425f-051c-460a-af92-8a5afb51f263",
+      "name": "XX*2"
+    },
+    {
+      "parameters": {
+        "jsCode": "const table = $input.first().json.table;\nconst keyword = table[0]['對照'];\n\n// R1三行有keyword，且R1/R2/R3這三行都不能有WX\nfunction findR1Block() {\n    for (let i = 1; i <= table.length - 3; i++) {\n        const block = [table[i], table[i+1], table[i+2]];\n        if (!block.some(row => row.R1 === keyword)) continue;\n        if (block.some(row => row.R1 === 'WX' || row.R2 === 'WX' || row.R3 === 'WX')) continue;\n        return { line: block[0].Line, index: i, block };\n    }\n    return null;\n}\n\n// R2三行有keyword、不能有R1區段非keyword的R1值，且三行都不能有WX\nfunction findR2Block(excludeVals) {\n    for (let i = 1; i <= table.length - 3; i++) {\n        const block = [table[i], table[i+1], table[i+2]];\n        if (!block.some(row => row.R2 === keyword)) continue;\n        if (block.some(row => excludeVals.includes(row.R2))) continue;\n        if (block.some(row => row.R1 === 'WX' || row.R2 === 'WX' || row.R3 === 'WX')) continue;\n        return { line: block[0].Line, index: i, block };\n    }\n    return null;\n}\n\n// R3三行有keyword，三行都不能有WX\nfunction findR3Block() {\n    for (let i = 1; i <= table.length - 3; i++) {\n        const block = [table[i], table[i+1], table[i+2]];\n        if (!block.some(row => row.R3 === keyword)) continue;\n        if (block.some(row => row.R1 === 'WX' || row.R2 === 'WX' || row.R3 === 'WX')) continue;\n        return { line: block[0].Line, index: i, block };\n    }\n    return null;\n}\n\n// 選R1\nconst blockR1 = findR1Block();\nlet excludeR1 = [];\nif (blockR1) {\n    for (let row of blockR1.block) {\n        if (row.R1 !== keyword) excludeR1.push(row.R1);\n    }\n}\n\n// 選R2（可重疊，無需往下跳）\nconst blockR2 = findR2Block(excludeR1);\n\n// 選R3（可重疊，無需往下跳）\nconst blockR3 = findR3Block();\n\nconst resultArr = [\n    blockR1 ? blockR1.line : '無',\n    blockR2 ? blockR2.line : '無',\n    blockR3 ? blockR3.line : '無'\n];\n\nconst outputString = `[${resultArr.join(',')}]`;\nreturn [{ json: { [keyword + '*3']: outputString } }];\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        600,
+        180
+      ],
+      "id": "e103bde3-e94b-472a-9d2a-b67b3bca99ae",
+      "name": "XX*3"
+    },
+    {
+      "parameters": {
+        "jsCode": "const table = $input.first().json.table;\nconst keyword = table[0]['對照'];\n\n// R1三行有keyword，且這三行不能有WX\nfunction findR1Block() {\n    for (let i = 1; i <= table.length - 3; i++) {\n        const block = [table[i], table[i+1], table[i+2]];\n        if (!block.some(row => row.R1 === keyword)) continue;\n        if (block.some(row => row.R1 === 'WX' || row.R2 === 'WX' || row.R3 === 'WX')) continue;\n        return { line: block[0].Line, index: i, block };\n    }\n    return null;\n}\n\n// R2三行必須有WX\nfunction findR2Block() {\n    for (let i = 1; i <= table.length - 3; i++) {\n        const block = [table[i], table[i+1], table[i+2]];\n        if (!block.some(row => row.R2 === 'WX')) continue;\n        return { line: block[0].Line, index: i, block };\n    }\n    return null;\n}\n\n// R3三行不能有keyword，也不能有WX\nfunction findR3Block() {\n    for (let i = 1; i <= table.length - 3; i++) {\n        const block = [table[i], table[i+1], table[i+2]];\n        // 不能有關鍵字\n        if (block.some(row => row.R3 === keyword)) continue;\n        // 不能有WX\n        if (block.some(row => row.R1 === 'WX' || row.R2 === 'WX' || row.R3 === 'WX')) continue;\n        return { line: block[0].Line, index: i, block };\n    }\n    return null;\n}\n\n// 選R1\nconst blockR1 = findR1Block();\n// 選R2\nconst blockR2 = findR2Block();\n// 選R3\nconst blockR3 = findR3Block();\n\nconst resultArr = [\n    blockR1 ? blockR1.line : '無',\n    blockR2 ? blockR2.line : '無',\n    blockR3 ? blockR3.line : '無'\n];\n\nconst outputString = `[${resultArr.join(',')}]`;\nreturn [{ json: { [keyword + '+WX']: outputString } }];\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        600,
+        340
+      ],
+      "id": "945a4ea8-1751-4c62-9dbe-8e61127e4a5b",
+      "name": "X+WX"
+    },
+    {
+      "parameters": {
+        "numberInputs": 5
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        900,
+        40
+      ],
+      "id": "8ba9e9ad-1542-431e-913b-1c4fbd17bb71",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all().map(item => {\n    const key = Object.keys(item.json)[0];\n    const val = item.json[key];\n    const symbol =$('When chat message received').first().json.chatInput;\n    return {\n        json: {\n          symbol:symbol,\n            條件: key,\n            結果: val\n        }\n    };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1080,
+        60
+      ],
+      "id": "ebe9d20b-5f6b-41f4-a996-dbadad9839ba",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1zqJzUaGIEtZS44wQL9hfdSr2diRL_Rt5wycRaEl5AsY",
+          "mode": "list",
+          "cachedResultName": "RNG",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zqJzUaGIEtZS44wQL9hfdSr2diRL_Rt5wycRaEl5AsY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 455829428,
+          "mode": "list",
+          "cachedResultName": "n8n-sheet",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zqJzUaGIEtZS44wQL9hfdSr2diRL_Rt5wycRaEl5AsY/edit#gid=455829428"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Symbol": "={{ $json.symbol }}",
+            "條件": "={{ $json['條件'] }}",
+            "結果": "={{ $json['結果'] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Symbol",
+              "displayName": "Symbol",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "條件",
+              "displayName": "條件",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "結果",
+              "displayName": "結果",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1300,
+        60
+      ],
+      "id": "3dbc3fde-fc4a-4925-b6b2-6cb33d096067",
+      "name": "Google Sheets1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Z5q1lrN1CgiD0Rb8",
+          "name": "Google Sheets account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const table = $input.first().json.table;\nconst keyword = table[0]['對照'];\n\n// R1三行有keyword，且三行都不能有WX\nfunction findR1Block() {\n    for (let i = 1; i <= table.length - 3; i++) {\n        const block = [table[i], table[i+1], table[i+2]];\n        if (!block.some(row => row.R1 === keyword)) continue;\n        if (block.some(row => row.R1 === 'WX' || row.R2 === 'WX' || row.R3 === 'WX')) continue;\n        return { line: block[0].Line, index: i, block };\n    }\n    return null;\n}\n\n// R2三行**必須有WX**、三行**都不能有關鍵字**，不能有R1區間非關鍵字的R1值\nfunction findR2Block(excludeVals) {\n    for (let i = 1; i <= table.length - 3; i++) {\n        const block = [table[i], table[i+1], table[i+2]];\n        // 必須有WX\n        if (!block.some(row => row.R2 === 'WX')) continue;\n        // 三行都不能有關鍵字\n        if (block.some(row => row.R2 === keyword)) continue;\n        // 不能有R1三行區間的非關鍵字R1值\n        if (block.some(row => excludeVals.includes(row.R2))) continue;\n        return { line: block[0].Line, index: i, block };\n    }\n    return null;\n}\n\n// R3三行有keyword，這三行不能有WX\nfunction findR3Block() {\n    for (let i = 1; i <= table.length - 3; i++) {\n        const block = [table[i], table[i+1], table[i+2]];\n        if (!block.some(row => row.R3 === keyword)) continue;\n        if (block.some(row => row.R1 === 'WX' || row.R2 === 'WX' || row.R3 === 'WX')) continue;\n        return { line: block[0].Line, index: i, block };\n    }\n    return null;\n}\n\n// 選R1\nconst blockR1 = findR1Block();\nlet excludeR1 = [];\nif (blockR1) {\n    for (let row of blockR1.block) {\n        if (row.R1 !== keyword) excludeR1.push(row.R1);\n    }\n}\n\n// 選R2（可重疊，無需往下跳）\nconst blockR2 = findR2Block(excludeR1);\n\n// 選R3（可重疊，無需往下跳）\nconst blockR3 = findR3Block();\n\nconst resultArr = [\n    blockR1 ? blockR1.line : '無',\n    blockR2 ? blockR2.line : '無',\n    blockR3 ? blockR3.line : '無'\n];\n\nconst outputString = `[${resultArr.join(',')}]`;\nreturn [{ json: { [keyword + '*2+WX']: outputString } }];\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        600,
+        480
+      ],
+      "id": "a494d8bd-a15e-44fe-ae0c-49e145966e3f",
+      "name": "X*2+WX"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-06-04T06:46:49.000Z",
+  "versionId": "8cf5f51e-9251-43af-847c-19b8eaae7d18"
+}
