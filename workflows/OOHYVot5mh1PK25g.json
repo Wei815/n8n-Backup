@@ -824,43 +824,6 @@
         180
       ],
       "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "resource": "repository",
-        "operation": "get",
-        "owner": {
-          "__rl": true,
-          "value": "Wei815",
-          "mode": "list",
-          "cachedResultName": "Wei815",
-          "cachedResultUrl": "https://github.com/Wei815"
-        },
-        "repository": {
-          "__rl": true,
-          "value": "La-cuisine",
-          "mode": "list",
-          "cachedResultName": "La-cuisine",
-          "cachedResultUrl": "https://github.com/Wei815/La-cuisine"
-        }
-      },
-      "id": "a0e519a6-1012-4cc4-ab83-6a31f074acad",
-      "name": "Get file data1",
-      "type": "n8n-nodes-base.github",
-      "position": [
-        -920,
-        720
-      ],
-      "typeVersion": 1,
-      "alwaysOutputData": true,
-      "webhookId": "0db08702-c804-4fbe-b907-f8d25e3af267",
-      "credentials": {
-        "githubApi": {
-          "id": "B9qaxfByFAAypWDi",
-          "name": "GitHub account"
-        }
-      },
-      "continueOnFail": true
     }
   ],
   "pinData": {},
@@ -870,6 +833,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-06-04T10:02:56.000Z",
-  "versionId": "2084e77e-9b2b-4f0c-a586-f4de7745f60d"
+  "updatedAt": "2025-06-04T10:03:45.000Z",
+  "versionId": "d15599a2-2bda-4ad5-ab28-d3ff12c6a448"
 }
