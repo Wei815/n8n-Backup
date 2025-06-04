@@ -1,0 +1,348 @@
+{
+  "active": false,
+  "connections": {
+    "Embeddings Google Gemini": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "List",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "窗口": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "特約": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List": {
+      "main": [
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pinecone Vector Store": {
+      "main": [
+        []
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-06-04T03:04:13.456Z",
+  "id": "gZEkcw49V9cbnI10",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Upload_vector_database.V2",
+  "nodes": [
+    {
+      "parameters": {
+        "mode": "insert",
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "n8ntestnew",
+          "mode": "list",
+          "cachedResultName": "n8ntestnew"
+        },
+        "options": {
+          "pineconeNamespace": "={{ $json.Namespace }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.1,
+      "position": [
+        -400,
+        -140
+      ],
+      "id": "78746f5a-dcaa-4efc-aeb0-a09ad8f71ba8",
+      "name": "Pinecone Vector Store",
+      "credentials": {
+        "pineconeApi": {
+          "id": "YPrW9DkZh4861Lbt",
+          "name": "PineconeApi account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "modelName": "models/embedding-001"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -500,
+        60
+      ],
+      "id": "3f09f19e-4593-4649-b80e-2f6a279d593c",
+      "name": "Embeddings Google Gemini",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "ivjgvmwy5Z6vbCEd",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "={{ $json.List }}:{{ $json['簡介'] }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        60
+      ],
+      "id": "a6d67822-d96b-4b53-b30c-25787115daff",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1280,
+        240
+      ],
+      "id": "3b474931-ad10-4536-8888-2024d95102f1",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => ({\n  json: {\n    text: `類型:${item.json[\"類型\"]}，店家:${item.json[\"店家\"]}，優惠內容${item.json[\"優惠內容\"]}，限定門市:${item.json[\"限定門市\"]}`\n  }\n}));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -820,
+        260
+      ],
+      "id": "18e84fb2-df8b-413e-b22e-d9241f75d205",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "jsCode": "let result = [];\n\nfor (const item of items) {\n  const product = (item.json[\"產品\"] || \"\").trim();\n  const explain = (item.json[\"說明\"] || \"\").trim();\n  // 切分每一行，去除空行\n  const lines = (item.json[\"問題對應窗口\"] || \"\").split('\\n').filter(line => line.trim() !== \"\");\n  for (const line of lines) {\n    // 最終合併格式：「產品-問題對應窗口口-說明」\n    result.push({\n      json: {\n        text: `產品:${product}，問題對應窗口:${line.trim()}，備註:${explain}`\n      }\n    });\n  }\n}\n\nreturn result;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -820,
+        60
+      ],
+      "id": "97eb7cef-87f6-4e39-ac2a-ab85530d69e1",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1G0fRsIhGUIHS82bm43Q7cj-cNaa5bt_dne1uBaR5bzk",
+          "mode": "list",
+          "cachedResultName": "AI知識庫",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1G0fRsIhGUIHS82bm43Q7cj-cNaa5bt_dne1uBaR5bzk/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 742668043,
+          "mode": "list",
+          "cachedResultName": "工作表2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1G0fRsIhGUIHS82bm43Q7cj-cNaa5bt_dne1uBaR5bzk/edit#gid=742668043"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -1020,
+        60
+      ],
+      "id": "cb225e51-35b8-456f-aa22-b94f150bd0b9",
+      "name": "窗口",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Z5q1lrN1CgiD0Rb8",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1G0fRsIhGUIHS82bm43Q7cj-cNaa5bt_dne1uBaR5bzk",
+          "mode": "list",
+          "cachedResultName": "AI知識庫",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1G0fRsIhGUIHS82bm43Q7cj-cNaa5bt_dne1uBaR5bzk/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "工作表1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1G0fRsIhGUIHS82bm43Q7cj-cNaa5bt_dne1uBaR5bzk/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -1020,
+        240
+      ],
+      "id": "6899e2ba-0ed5-4efe-8fbf-ef58592ee19d",
+      "name": "特約",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Z5q1lrN1CgiD0Rb8",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => ({\n  json: {\n    Namespace:'List',\n    ID:item.json[\"row_number\"]-1,\n    List: item.json[\"List\"],\n    簡介: item.json[\"簡介\"]\n  }\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -820,
+        -140
+      ],
+      "id": "4dba8bdd-9561-4cc8-b952-8f0aa9454849",
+      "name": "Code2"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1G0fRsIhGUIHS82bm43Q7cj-cNaa5bt_dne1uBaR5bzk",
+          "mode": "list",
+          "cachedResultName": "AI知識庫",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1G0fRsIhGUIHS82bm43Q7cj-cNaa5bt_dne1uBaR5bzk/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 408462775,
+          "mode": "list",
+          "cachedResultName": "SheetList",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1G0fRsIhGUIHS82bm43Q7cj-cNaa5bt_dne1uBaR5bzk/edit#gid=408462775"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -1040,
+        -140
+      ],
+      "id": "d310655b-f9ca-4cbc-8e3f-3601452aa163",
+      "name": "List",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Z5q1lrN1CgiD0Rb8",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        260
+      ],
+      "id": "9d9dcb41-f9fd-4ec9-b67c-9397c6aa2308",
+      "name": "Recursive Character Text Splitter"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-06-03T07:08:06.178Z",
+      "updatedAt": "2025-06-03T07:08:06.178Z",
+      "id": "JRyNALIm69gzhAvi",
+      "name": "知識庫"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-06-04T05:57:32.000Z",
+  "versionId": "025c48c5-ea72-4e30-a6a1-ee0fc8900491"
+}
