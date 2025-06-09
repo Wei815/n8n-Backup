@@ -1,0 +1,402 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pinecone Vector Store": {
+      "main": [
+        [
+          {
+            "node": "篩選分數",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "篩選分數": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "向量搜尋": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ai回答模組": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-06-04T09:17:38.811Z",
+  "id": "Z3CFSzQbTbOMB6TE",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Search_RAG_V3",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "chatbox",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -720,
+        -240
+      ],
+      "id": "3b37299c-62ba-461b-adce-e4ea18311caa",
+      "name": "Webhook",
+      "webhookId": "f0e77065-c447-4841-94da-a9c0c9915796"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{$json[\"html\"]}}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "text/html"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.3,
+      "position": [
+        -160,
+        -240
+      ],
+      "id": "47ea4b40-9f8c-4329-8d3a-8c73a8629092",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "jsCode": "const options = items.map(item => {\n  const listName = item.json[\"List\"] || \"未命名\";\n  return `<option value=\"${listName}\">${listName}</option>`;\n}).join('');\n\nreturn [{\n  json: {\n    html: `<!DOCTYPE html>\n<html lang=\"zh-Hant\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <title>Chat 聊天 UI</title>\n    <style>\n      body { font-family: sans-serif; max-width: 600px; margin: 2rem auto; }\n      #messages { border: 1px solid #ccc; padding: 1rem; height: 300px; overflow-y: auto; margin-bottom: 1rem; background: #f9f9f9; }\n      .msg { margin: 0.5rem 0; }\n      .user { text-align: right; color: blue; }\n      .bot { text-align: left; color: green; }\n      select, input[type=\"text\"] {\n        width: 100%;\n        padding: 0.5rem;\n        font-size: 1rem;\n        margin-bottom: 0.5rem;\n      }\n    </style>\n  </head>\n  <body>\n    <h2>聊天介面</h2>\n    <select id=\"listSelector\">\n      ${options}\n    </select>\n    <div id=\"messages\"></div>\n    <input type=\"text\" id=\"input\" placeholder=\"輸入訊息後按 Enter\" autocomplete=\"off\" autofocus />\n\n    <script>\n      const input = document.getElementById('input');\n      const messages = document.getElementById('messages');\n      const listSelector = document.getElementById('listSelector');\n\n      input.addEventListener('keydown', async (e) => {\n        if (e.key === 'Enter') {\n          const text = input.value.trim();\n          const selected = listSelector.value;\n          if (!text) return;\n          input.value = '';\n          messages.innerHTML += '<div class=\"msg user\">[' + selected + '] ' + text + '</div>';\n\n          try {\n            const res = await fetch('/webhook/chatbox-input', {\n              method: 'POST',\n              headers: { 'Content-Type': 'application/json' },\n              body: JSON.stringify({\n                input: text,\n                category: selected\n              })\n            });\n\n            const data = await res.json();\n            messages.innerHTML += '<div class=\"msg bot\">' + data.reply + '</div>';\n            messages.scrollTop = messages.scrollHeight;\n          } catch (err) {\n            messages.innerHTML += '<div class=\"msg bot\">⚠️ 系統錯誤</div>';\n            console.error(err);\n          }\n        }\n      });\n    </script>\n  </body>\n</html>`\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -340,
+        -240
+      ],
+      "id": "0af58eac-c904-4075-a756-cc44d828ede5",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "chatbox-input",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -980,
+        -20
+      ],
+      "id": "8d1160fd-685f-4860-abbf-05344eeda756",
+      "name": "Webhook1",
+      "webhookId": "e84798fd-22aa-4e44-a127-faee16f700f6"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.3,
+      "position": [
+        460,
+        -40
+      ],
+      "id": "32a56e34-a6af-4f84-a80a-46deda09ba43",
+      "name": "Respond to Webhook1"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1G0fRsIhGUIHS82bm43Q7cj-cNaa5bt_dne1uBaR5bzk",
+          "mode": "list",
+          "cachedResultName": "AI知識庫",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1G0fRsIhGUIHS82bm43Q7cj-cNaa5bt_dne1uBaR5bzk/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 408462775,
+          "mode": "list",
+          "cachedResultName": "SheetList",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1G0fRsIhGUIHS82bm43Q7cj-cNaa5bt_dne1uBaR5bzk/edit#gid=408462775"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -540,
+        -240
+      ],
+      "id": "6cf7837e-0031-4ee4-9ce5-a4e856aa2b80",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Z5q1lrN1CgiD0Rb8",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const output = items?.[0]?.json?.output;\n\nreturn [{\n  json: {\n    reply: output || '⚠️ AI 沒有回覆任何內容'\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        260,
+        -40
+      ],
+      "id": "71b993e5-7bd6-4217-bc58-1aeda263e2ca",
+      "name": "Code2"
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $json.body?.input || '（空訊息）';\nconst category = $json.body?.category || 'default';\n\nreturn [{\n  json: {\n    chatInput: input,\n    namespace: category\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -740,
+        -20
+      ],
+      "id": "7ff3ef03-8ecf-48b8-91f4-d92644017a59",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "mode": "load",
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "n8ntestnew",
+          "mode": "list",
+          "cachedResultName": "n8ntestnew"
+        },
+        "prompt": "={{ $json.chatInput }}",
+        "topK": 20,
+        "options": {
+          "pineconeNamespace": "={{ $json.namespace }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.2,
+      "position": [
+        -540,
+        -40
+      ],
+      "id": "1e2520b3-8923-433e-9a99-0b53489bea86",
+      "name": "Pinecone Vector Store",
+      "credentials": {
+        "pineconeApi": {
+          "id": "YPrW9DkZh4861Lbt",
+          "name": "PineconeApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.prompt }}",
+        "options": {
+          "systemMessage": "不用傳送思考紀錄、根據內容、使用者問題，直接告訴答案就好,\n如果找不到相關問題，回傳找不到相關的內容，請換個說法或確認資料庫,\n幫我判斷重要部分並標粗,\n美化展現格式,\n自主判斷換行，分段，標點符號,"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        -60,
+        -40
+      ],
+      "id": "1d266693-2aee-4c8d-b09f-526cfeff9415",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "jsCode": "const question = $('Code1').first().json.chatInput;\nconst SCORE_THRESHOLD = 0.5;\n\nconst matchedDocs = items\n  .filter(i => i.json.score >= SCORE_THRESHOLD)\n  .map(i => i.json.document.pageContent)\n  .join('\\n\\n');\n\n\nif (!matchedDocs) {\n  return [{\n    json: {\n      answer: `❌ 找不到與「${question}」相關的知識內容，請換個說法或確認資料庫。`\n    }\n  }];\n}\n\nconst prompt = `以下是知識庫內容，請根據這些資料回答問題：\\n\\n${matchedDocs}\\n\\n使用者問題：${question}`;\n\nreturn [{\n  json: { prompt }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -200,
+        -40
+      ],
+      "id": "a2e815da-0bb6-4f1e-be02-e07097aafec6",
+      "name": "篩選分數"
+    },
+    {
+      "parameters": {
+        "modelName": "models/embedding-001"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -540,
+        100
+      ],
+      "id": "7610d268-89e5-4af9-abb2-2c817a5d826d",
+      "name": "向量搜尋",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "ivjgvmwy5Z6vbCEd",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/learnlm-2.0-flash-experimental",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -60,
+        140
+      ],
+      "id": "d90dfc6c-e3a4-4951-893a-d1afa518fd16",
+      "name": "Ai回答模組",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "ivjgvmwy5Z6vbCEd",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Google Sheets Trigger": {
+      "documentId": "1G0fRsIhGUIHS82bm43Q7cj-cNaa5bt_dne1uBaR5bzk",
+      "sheetId": 408462775,
+      "lastRevision": 145,
+      "lastRevisionLink": "https://docs.google.com/spreadsheets/export?id=1G0fRsIhGUIHS82bm43Q7cj-cNaa5bt_dne1uBaR5bzk&revision=145&exportFormat=xlsx"
+    },
+    "node:Google Drive Trigger": {
+      "lastTimeChecked": "2025-06-05T02:54:16Z"
+    }
+  },
+  "tags": [
+    {
+      "createdAt": "2025-06-03T07:08:06.178Z",
+      "updatedAt": "2025-06-03T07:08:06.178Z",
+      "id": "JRyNALIm69gzhAvi",
+      "name": "知識庫"
+    }
+  ],
+  "triggerCount": 2,
+  "updatedAt": "2025-06-09T12:04:48.000Z",
+  "versionId": "e4b2d6c5-b503-4f7a-924d-b300ed54691e"
+}
