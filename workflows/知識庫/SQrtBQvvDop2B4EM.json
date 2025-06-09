@@ -60,7 +60,9 @@
   "createdAt": "2025-06-04T05:05:01.641Z",
   "id": "SQrtBQvvDop2B4EM",
   "isArchived": false,
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "Search-RAG.V2",
   "nodes": [
     {
@@ -70,8 +72,8 @@
       "type": "@n8n/n8n-nodes-langchain.chatTrigger",
       "typeVersion": 1.1,
       "position": [
-        -460,
-        -20
+        -720,
+        -40
       ],
       "id": "91cdc343-3daf-41fb-9eb4-177c6a14c7b9",
       "name": "When chat message received",
@@ -95,8 +97,8 @@
       "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
       "typeVersion": 1.2,
       "position": [
-        -240,
-        -20
+        -460,
+        -40
       ],
       "id": "d6424005-1070-42fd-ac58-6e88a02d6fc1",
       "name": "Pinecone Vector Store",
@@ -118,21 +120,21 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
-        340,
-        -20
+        140,
+        -40
       ],
       "id": "9638e146-81b2-438f-a62a-3f1a20699a25",
       "name": "AI Agent"
     },
     {
       "parameters": {
-        "jsCode": "const question = $('When chat message received').first().json.chatInput.trim().toLowerCase();\nconst SCORE_THRESHOLD = 0.5;\n\nconst matchedDocs = items\n  .filter(i => i.json.score >= SCORE_THRESHOLD)\n  .map(i => i.json.document.pageContent)\n  .join('\\n\\n');\n\n\nif (!matchedDocs) {\n  return [{\n    json: {\n      answer: `❌ 找不到與「${question}」相關的知識內容，請換個說法或確認資料庫。`\n    }\n  }];\n}\n\nconst prompt = `以下是知識庫內容，請根據這些資料回答問題：\\n\\n${matchedDocs}\\n\\n使用者問題：${question}`;\n\nreturn [{\n  json: { prompt }\n}];\n"
+        "jsCode": "const question = $('When chat message received').first().json.chatInput.trim().toLowerCase();\nconst SCORE_THRESHOLD = 0.9;\n\nconst matchedDocs = items\n  .filter(i => i.json.score >= SCORE_THRESHOLD)\n  .map(i => i.json.document.pageContent)\n  .join('\\n\\n');\n\n\nif (!matchedDocs) {\n  return [{\n    json: {\n      answer: `❌ 找不到與「${question}」相關的知識內容，請換個說法或確認資料庫。`\n    }\n  }];\n}\n\nconst prompt = `以下是知識庫內容，請根據這些資料回答問題：\\n\\n${matchedDocs}\\n\\n使用者問題：${question}`;\n\nreturn [{\n  json: { prompt }\n}];\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        120,
-        -20
+        -100,
+        -40
       ],
       "id": "4671d941-8efc-4122-aa2a-3952481707f9",
       "name": "篩選分數"
@@ -144,7 +146,7 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
       "typeVersion": 1,
       "position": [
-        -240,
+        -440,
         140
       ],
       "id": "225a1c10-3637-4e24-a40a-b37c3aa0b4a5",
@@ -164,8 +166,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        340,
-        140
+        140,
+        120
       ],
       "id": "3f9016c5-c946-444d-a5b1-a89c169c287e",
       "name": "Ai回答模組",
@@ -191,6 +193,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2025-06-04T05:22:12.000Z",
-  "versionId": "0514962d-4ec9-49a3-aeb4-79bf162c581b"
+  "updatedAt": "2025-06-09T01:57:34.000Z",
+  "versionId": "4d4de7d6-7a0d-48e1-b5f5-04e71230f2ab"
 }
