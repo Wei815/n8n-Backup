@@ -129,8 +129,7 @@
           "id": "YPrW9DkZh4861Lbt",
           "name": "PineconeApi account"
         }
-      },
-      "disabled": true
+      }
     },
     {
       "parameters": {
@@ -155,7 +154,16 @@
       "parameters": {
         "jsonMode": "expressionData",
         "jsonData": "={{ $json.List }}:{{ $json['簡介'] }}",
-        "options": {}
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "Key Points",
+                "value": "={{ $json.List }}"
+              }
+            ]
+          }
+        }
       },
       "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
       "typeVersion": 1,
@@ -343,6 +351,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2025-06-04T05:57:32.000Z",
-  "versionId": "025c48c5-ea72-4e30-a6a1-ee0fc8900491"
+  "updatedAt": "2025-06-09T01:42:30.000Z",
+  "versionId": "18697e77-531c-4036-9629-5e57c8ba32f4"
 }
