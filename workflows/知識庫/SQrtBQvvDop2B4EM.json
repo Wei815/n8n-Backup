@@ -114,7 +114,7 @@
         "promptType": "define",
         "text": "={{ $json.prompt }}",
         "options": {
-          "systemMessage": "不用傳送思考紀錄、根據內容、使用者問題，直接告訴答案就好,\n如果找不到相關問題，回傳找不到相關的內容，請換個說法或確認資料庫,\n幫我判斷重要部分並標粗,\n美化展現格式,\n自主判斷換行，分段，標點符號,"
+          "systemMessage": "不用傳送思考紀錄、根據內容、使用者問題，模糊搜尋後，直接告訴答案就好,\n如果找不到相關問題，回傳找不到相關的內容，請換個說法或確認資料庫,\n幫我判斷重要部分並標粗,\n美化展現格式,\n自主判斷換行，分段，標點符號,"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -128,7 +128,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const question = $('When chat message received').first().json.chatInput.trim().toLowerCase();\nconst SCORE_THRESHOLD = 0.9;\n\nconst matchedDocs = items\n  .filter(i => i.json.score >= SCORE_THRESHOLD)\n  .map(i => i.json.document.pageContent)\n  .join('\\n\\n');\n\n\nif (!matchedDocs) {\n  return [{\n    json: {\n      answer: `❌ 找不到與「${question}」相關的知識內容，請換個說法或確認資料庫。`\n    }\n  }];\n}\n\nconst prompt = `以下是知識庫內容，請根據這些資料回答問題：\\n\\n${matchedDocs}\\n\\n使用者問題：${question}`;\n\nreturn [{\n  json: { prompt }\n}];\n"
+        "jsCode": "const question = $('When chat message received').first().json.chatInput.trim().toLowerCase();\nconst SCORE_THRESHOLD = 0.7;\n\nconst matchedDocs = items\n  .filter(i => i.json.score >= SCORE_THRESHOLD)\n  .map(i => i.json.document.pageContent)\n  .join('\\n\\n');\n\n\nif (!matchedDocs) {\n  return [{\n    json: {\n      answer: `❌ 找不到與「${question}」相關的知識內容，請換個說法或確認資料庫。`\n    }\n  }];\n}\n\nconst prompt = `以下是知識庫內容，請根據這些資料回答問題：\\n\\n${matchedDocs}\\n\\n使用者問題：${question}`;\n\nreturn [{\n  json: { prompt }\n}];\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -146,8 +146,8 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
       "typeVersion": 1,
       "position": [
-        -440,
-        140
+        -540,
+        160
       ],
       "id": "225a1c10-3637-4e24-a40a-b37c3aa0b4a5",
       "name": "向量搜尋",
@@ -193,6 +193,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2025-06-09T01:57:34.000Z",
-  "versionId": "4d4de7d6-7a0d-48e1-b5f5-04e71230f2ab"
+  "updatedAt": "2025-06-10T01:11:56.000Z",
+  "versionId": "b9e37734-5273-4c78-84e1-8f217e24f6ce"
 }
