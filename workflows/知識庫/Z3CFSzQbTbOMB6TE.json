@@ -308,7 +308,7 @@
         "promptType": "define",
         "text": "={{ $json.prompt }}",
         "options": {
-          "systemMessage": "不用傳送思考紀錄、根據內容、使用者問題，直接告訴答案就好,\n如果找不到相關問題，回傳找不到相關的內容，請換個說法或確認資料庫,\n幫我判斷重要部分並標粗,\n美化展現格式,\n自主判斷換行，分段，標點符號,"
+          "systemMessage": "不用傳送思考紀錄、根據內容、使用者問題，模糊搜尋後，直接告訴答案就好,\n如果找不到相關問題，回傳找不到相關的內容，請換個說法或確認資料庫,\n幫我判斷重要部分並標粗,\n美化展現格式,\n自主判斷換行，分段，標點符號,"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -397,6 +397,6 @@
     }
   ],
   "triggerCount": 2,
-  "updatedAt": "2025-06-09T12:04:48.000Z",
-  "versionId": "e4b2d6c5-b503-4f7a-924d-b300ed54691e"
+  "updatedAt": "2025-06-10T01:12:13.000Z",
+  "versionId": "c94aef1e-c0bb-43c2-8f91-d8edf14f72b5"
 }
