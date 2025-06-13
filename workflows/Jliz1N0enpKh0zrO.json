@@ -1,0 +1,867 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "補足合併格",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "找檔案": {
+      "main": [
+        [
+          {
+            "node": "判斷是否有檔案",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "找資料夾": {
+      "main": [
+        [
+          {
+            "node": "找檔案",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "補足合併格": {
+      "main": [
+        [
+          {
+            "node": "轉化DOC",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "轉化DOC": {
+      "main": [
+        [
+          {
+            "node": "找資料夾",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判斷是否有檔案": {
+      "main": [
+        [
+          {
+            "node": "創建/新增",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "找舊文件內容": {
+      "main": [
+        [
+          {
+            "node": "取代為空",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "取代為空": {
+      "main": [
+        [
+          {
+            "node": "尋找檔案(新建立)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "創建/新增": {
+      "main": [
+        [
+          {
+            "node": "找舊文件內容",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "創建檔案",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "創建檔案": {
+      "main": [
+        [
+          {
+            "node": "尋找檔案(新建立)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "尋找檔案(新建立)": {
+      "main": [
+        [
+          {
+            "node": "上傳新內容",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "上傳新內容": {
+      "main": [
+        [
+          {
+            "node": "找新文件內容",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "美化排版",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "找新文件內容": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "美化排版": {
+      "main": [
+        [
+          {
+            "node": "找分析檔案",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "找分析檔案": {
+      "main": [
+        [
+          {
+            "node": "創建/新增(分析)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "創建/新增(分析)": {
+      "main": [
+        [
+          {
+            "node": "找舊文件內容(分析)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "創建檔案(分析)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "找舊文件內容(分析)": {
+      "main": [
+        [
+          {
+            "node": "取代為空(分析)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "取代為空(分析)": {
+      "main": [
+        [
+          {
+            "node": "尋找檔案(分析)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "創建檔案(分析)": {
+      "main": [
+        [
+          {
+            "node": "尋找檔案(分析)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "尋找檔案(分析)": {
+      "main": [
+        [
+          {
+            "node": "上傳新內容(分析)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-06-10T08:20:07.182Z",
+  "id": "Jliz1N0enpKh0zrO",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1920,
+        -520
+      ],
+      "id": "1f59b5f6-a192-4e5b-8930-ff4c17f5fa0a",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1ycyuu4mYYysyKrWSNrKFBDdwRBiqboejWjjAbGGNRB0",
+          "mode": "list",
+          "cachedResultName": "AutoTestReport",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ycyuu4mYYysyKrWSNrKFBDdwRBiqboejWjjAbGGNRB0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1068631105,
+          "mode": "list",
+          "cachedResultName": "Slot Game General Test",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ycyuu4mYYysyKrWSNrKFBDdwRBiqboejWjjAbGGNRB0/edit#gid=1068631105"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -1680,
+        -520
+      ],
+      "id": "a4a5873a-abf2-42af-8429-2c20ad184d66",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Z5q1lrN1CgiD0Rb8",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{ $('轉化DOC').item.json.fileName }}",
+        "filter": {
+          "includeTrashed": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -1360,
+        -320
+      ],
+      "id": "42eb156b-1666-4414-b739-858b98e07ec3",
+      "name": "找檔案",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "aOTgkVLjSyzMSN5D",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "=n8n-測案",
+        "filter": {
+          "includeTrashed": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -1480,
+        -320
+      ],
+      "id": "5451c474-39bb-4af4-8c2d-88ea9cc0589f",
+      "name": "找資料夾",
+      "notesInFlow": false,
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "aOTgkVLjSyzMSN5D",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "let prev = {};\n\n// 先初始化每個欄位為空字串\nObject.keys(items[0].json).forEach(key => {\n  prev[key] = '';\n});\n\nreturn items.map(item => {\n  const row = item.json;\n\n  for (let key of Object.keys(row)) {\n    if (!row[key] || row[key].toString().trim() === '') {\n      row[key] = prev[key];\n    } else {\n      prev[key] = row[key]; // 記錄目前值供下筆繼承\n    }\n  }\n\n  return { json: row };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1760,
+        -320
+      ],
+      "id": "8c827e69-58b0-41eb-8053-b371a9153327",
+      "name": "補足合併格"
+    },
+    {
+      "parameters": {
+        "jsCode": "let result = '';\nconst fileName = 'AutoTestReport';\n\nitems.forEach(item => {\n  const row = item.json;\n\n  result += `ID: ${row[\"ID\"]}\\n`;\n  result += `Category: ${row[\"Category\"]}\\n`;\n  result += `Sub-Item: ${row[\"Sub-Item\"]}\\n`;\n  result += `Expected Steps:\\n${row[\"Expected Steps\"]}\\n`;\n  result += `WEB: ${row[\"WEB\"] || \"無\"}\\n`;\n  result += `驗收人員: ${row[\"驗收人員\"] || \"無\"}\\n`;\n  result += `---\\n\\n`;\n});\n\nreturn [{\n  json: {\n    fileName: fileName,\n    content: result\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1640,
+        -320
+      ],
+      "id": "5b9f88f9-3a2a-434d-94c3-2ad1ce089842",
+      "name": "轉化DOC"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{ $('轉化DOC').item.json.fileName }}",
+        "filter": {
+          "includeTrashed": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -1220,
+        -320
+      ],
+      "id": "2314ff87-2b09-4dad-9a1e-ba165e3b2e5b",
+      "name": "判斷是否有檔案",
+      "notesInFlow": false,
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "aOTgkVLjSyzMSN5D",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        -1320,
+        -600
+      ],
+      "id": "d23ba1f1-5151-4495-9974-060b4806d12f",
+      "name": "找舊文件內容",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "DZHitKLR54d5zqDs",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "={{ $('判斷是否有檔案').item.json.id }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.content }}",
+              "replaceText": "={{ \" \" }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        -1200,
+        -600
+      ],
+      "id": "8b08961a-4a4f-4e92-a566-22728f8dd951",
+      "name": "取代為空",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "DZHitKLR54d5zqDs",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "={{ $json.id }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "insert",
+              "text": "={{ $('轉化DOC').item.json.content }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        -920,
+        -600
+      ],
+      "id": "f9609bf3-7c64-4137-b9ad-0669ae035ad8",
+      "name": "上傳新內容",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "DZHitKLR54d5zqDs",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "folderId": "={{ $('找資料夾').item.json.id }}",
+        "title": "={{ $('轉化DOC').item.json.fileName }}"
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        -1320,
+        -460
+      ],
+      "id": "a08c64a3-82e6-4458-957a-081b94d8a102",
+      "name": "創建檔案",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "DZHitKLR54d5zqDs",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "689f471b-2e0c-4329-b052-09c34fa84304",
+              "leftValue": "={{ $json.name }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1460,
+        -520
+      ],
+      "id": "55a62212-65ab-4b4c-86a6-e71488594b42",
+      "name": "創建/新增"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{ $('轉化DOC').item.json.fileName }}",
+        "filter": {
+          "includeTrashed": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -1060,
+        -600
+      ],
+      "id": "3ac7700c-a408-4b7b-af4c-5050fe019977",
+      "name": "尋找檔案(新建立)",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "aOTgkVLjSyzMSN5D",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "你是一位資深的 QA 測試工程師，擅長撰寫與審核測試案例。你將協助我檢查以下測試案例資料，請執行以下任務：\n\n1. 模擬一位 QA 專業角色，判斷這些案例是否符合完整測試邏輯與語意。\n2. 標示出每個測試案例中「相對較重要」的項目（例如更關鍵的操作或影響風險較大的步驟）。\n3. 判斷是否有缺漏測項，並指出應補充哪些測試方向或條件。\n4. 檢查是否存在冗詞贅句、重複描述、模糊詞彙等語意不佳的部分，並提供優化建議。\n\n請根據上述原則分析以下測試案例，並輸出：\n\n- 每一筆測試案例的：分析摘要、建議重點、是否需補充、新增建議（若有）、語句優化建議（若有）。\n\n格式舉例（可略調整）：\n\n---\nID: A01  \n分析重點：...  \n缺失檢查：...  \n優化建議：...  \n---"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        -500,
+        -600
+      ],
+      "id": "b6c0b4ba-aeb6-442b-8d59-d69ee7321b61",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: {\n      chatInput: $json.content,\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -640,
+        -600
+      ],
+      "id": "81b58946-7f2e-437f-8edf-ce21d542a08b",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "modelName": "models/learnlm-2.0-flash-experimental",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -500,
+        -460
+      ],
+      "id": "63de9ce7-4eaa-4286-86e9-68ee1b78ba62",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "ivjgvmwy5Z6vbCEd",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "={{ $('尋找檔案(新建立)').item.json.id }}"
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        -780,
+        -600
+      ],
+      "id": "fecff8eb-521b-4f79-8825-928ad23207c8",
+      "name": "找新文件內容",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "DZHitKLR54d5zqDs",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = ($input.first().json.output || '').replace(/\\\\n/g, '\\n');\n// 預設標題清單（容錯）  \nconst titles = {\n  '分析重點': 'analysis',\n  '缺失檢查': 'missing',\n  '優化建議': 'optimize',\n  '新增建議': 'suggestions',\n  '語句優化建議': 'wording',\n};\n\nconst blocks = raw.split(/-{3,}/).filter(b => /ID[:：]\\s*/.test(b));\n\nconst result = blocks.map(block => {\n  const lines = block.split('\\n');\n  let id = 'N/A';\n  const section = {\n    analysis: '',\n    missing: '',\n    optimize: '',\n    suggestions: '',\n    wording: '',\n  };\n\n  let currentKey = null;\n\n  for (let line of lines) {\n    line = line.trim();\n\n    // 取得 ID\n    const idMatch = line.match(/ID[:：]\\s*(\\S+)/);\n    if (idMatch) {\n      id = idMatch[1];\n      continue;\n    }\n\n    // 判斷是否是標題\n    const titleMatch = Object.keys(titles).find(title => line.startsWith(title));\n    if (titleMatch) {\n      currentKey = titles[titleMatch];\n      section[currentKey] = line.replace(`${titleMatch}：`, '').trim();\n      continue;\n    }\n\n    // 否則為段落文字，接續在上段後面\n    if (currentKey) {\n      section[currentKey] += '\\n' + line;\n    }\n  }\n\n  const toList = (txt) =>\n    txt\n      .split('\\n')\n      .map(s => s.trim().replace(/^\\*+/, '').trim())\n      .filter(s => s)\n      .map((s, i) => `${i + 1}. ${s}`)\n      .join('\\n');\n\n  return `\n⭐️ 測試案例分析報告：${id}\n🔍 分析重點\n${section.analysis || '（無）'}\n🚨 缺失檢查\n${section.missing || '（無）'}\n🛠 優化建議\n${section.optimize || '（無）'}\n➕ 建議新增測試項目\n${toList(section.suggestions) || '（無）'}\n✏️ 語句優化建議\n${toList(section.wording) || '（無）'}\n`.trim();\n});\n\nreturn [{ json: { \n  name:$('轉化DOC').first().json.fileName + '分析',\n  formatted: result.join('\\n\\n') } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1040,
+        -340
+      ],
+      "id": "7b5b7e07-4b54-4145-8af6-efb45913c601",
+      "name": "美化排版"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{ $json.name }}",
+        "filter": {
+          "includeTrashed": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -900,
+        -340
+      ],
+      "id": "1240d0ad-caed-4ebb-ad9f-97eec3d8e0d2",
+      "name": "找分析檔案",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "aOTgkVLjSyzMSN5D",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "689f471b-2e0c-4329-b052-09c34fa84304",
+              "leftValue": "={{ $json.name }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": "=",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -760,
+        -340
+      ],
+      "id": "3a32278d-765e-420b-9dcb-fe735c9b8280",
+      "name": "創建/新增(分析)"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "={{ $json.id }}"
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        -580,
+        -340
+      ],
+      "id": "9894b79e-225c-4458-b80b-de83cbc31723",
+      "name": "找舊文件內容(分析)",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "DZHitKLR54d5zqDs",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "={{ $('找分析檔案').item.json.id }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.content }}",
+              "replaceText": "={{ \" \" }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        -460,
+        -340
+      ],
+      "id": "b1f07208-f363-4742-9235-50ac5d729710",
+      "name": "取代為空(分析)",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "DZHitKLR54d5zqDs",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "folderId": "={{ $('找資料夾').item.json.id }}",
+        "title": "={{ $('美化排版').item.json.name }}"
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        -460,
+        -180
+      ],
+      "id": "56fe2766-34b7-440a-a987-8a9e45fc1797",
+      "name": "創建檔案(分析)",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "DZHitKLR54d5zqDs",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{ $('美化排版').item.json.name }}",
+        "filter": {
+          "includeTrashed": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -340,
+        -340
+      ],
+      "id": "b44979fe-506c-4113-bd10-1ed721051961",
+      "name": "尋找檔案(分析)",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "aOTgkVLjSyzMSN5D",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "={{ $json.id }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "insert",
+              "text": "={{ $('美化排版').item.json.formatted }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        -200,
+        -340
+      ],
+      "id": "1bf33388-0d19-47b7-9808-05b83508d849",
+      "name": "上傳新內容(分析)",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "DZHitKLR54d5zqDs",
+          "name": "Google Docs account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-06-13T16:05:53.000Z",
+  "versionId": "cfa2e365-698b-4b4c-9e93-d018e8a2a83e"
+}
