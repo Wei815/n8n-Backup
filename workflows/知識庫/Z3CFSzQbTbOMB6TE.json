@@ -1,22 +1,11 @@
 {
-  "active": true,
+  "active": false,
   "connections": {
     "Webhook": {
       "main": [
         [
           {
             "node": "Google Sheets",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code": {
-      "main": [
-        [
-          {
-            "node": "Respond to Webhook",
             "type": "main",
             "index": 0
           }
@@ -121,6 +110,17 @@
           }
         ]
       ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-06-04T09:17:38.811Z",
@@ -140,7 +140,7 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        -720,
+        -700,
         -240
       ],
       "id": "3b37299c-62ba-461b-adce-e4ea18311caa",
@@ -170,19 +170,6 @@
       ],
       "id": "47ea4b40-9f8c-4329-8d3a-8c73a8629092",
       "name": "Respond to Webhook"
-    },
-    {
-      "parameters": {
-        "jsCode": "const options = items.map(item => {\n  const listName = item.json[\"List\"] || \"未命名\";\n  return `<option value=\"${listName}\">${listName}</option>`;\n}).join('');\n\nreturn [{\n  json: {\n    html: `<!DOCTYPE html>\n<html lang=\"zh-Hant\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <title>Chat 聊天 UI</title>\n    <style>\n      body { font-family: sans-serif; max-width: 600px; margin: 2rem auto; }\n      #messages { border: 1px solid #ccc; padding: 1rem; height: 300px; overflow-y: auto; margin-bottom: 1rem; background: #f9f9f9; }\n      .msg { margin: 0.5rem 0; }\n      .user { text-align: right; color: blue; }\n      .bot { text-align: left; color: green; }\n      select, input[type=\"text\"] {\n        width: 100%;\n        padding: 0.5rem;\n        font-size: 1rem;\n        margin-bottom: 0.5rem;\n      }\n    </style>\n  </head>\n  <body>\n    <h2>聊天介面</h2>\n    <select id=\"listSelector\">\n      ${options}\n    </select>\n    <div id=\"messages\"></div>\n    <input type=\"text\" id=\"input\" placeholder=\"輸入訊息後按 Enter\" autocomplete=\"off\" autofocus />\n\n    <script>\n      const input = document.getElementById('input');\n      const messages = document.getElementById('messages');\n      const listSelector = document.getElementById('listSelector');\n\n      input.addEventListener('keydown', async (e) => {\n        if (e.key === 'Enter') {\n          const text = input.value.trim();\n          const selected = listSelector.value;\n          if (!text) return;\n          input.value = '';\n          messages.innerHTML += '<div class=\"msg user\">[' + selected + '] ' + text + '</div>';\n\n          try {\n            const res = await fetch('/webhook/chatbox-input', {\n              method: 'POST',\n              headers: { 'Content-Type': 'application/json' },\n              body: JSON.stringify({\n                input: text,\n                category: selected\n              })\n            });\n\n            const data = await res.json();\n            messages.innerHTML += '<div class=\"msg bot\">' + data.reply + '</div>';\n            messages.scrollTop = messages.scrollHeight;\n          } catch (err) {\n            messages.innerHTML += '<div class=\"msg bot\">⚠️ 系統錯誤</div>';\n            console.error(err);\n          }\n        }\n      });\n    </script>\n  </body>\n</html>`\n  }\n}];\n"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        -340,
-        -240
-      ],
-      "id": "0af58eac-c904-4075-a756-cc44d828ede5",
-      "name": "Code"
     },
     {
       "parameters": {
@@ -249,7 +236,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const output = items?.[0]?.json?.output;\n\nreturn [{\n  json: {\n    reply: output || '⚠️ AI 沒有回覆任何內容'\n  }\n}];\n"
+        "jsCode": "let output = items?.[0]?.json?.output || '⚠️ AI 沒有回覆任何內容';\n\n// ✅ 1. 移除所有星號（不論是 *, **, 中間出現的 *）\noutput = output.replace(/\\*/g, '');\n\n// ✅ 2. 若出現 [url](url) → 去除重複格式，只保留 url\noutput = output.replace(/\\[(https?:\\/\\/[^\\]\\s]+)\\]\\(\\1\\)/g, '$1');\n\n// ✅ 3. 在網址前補上換行（避免跟前方字黏住）\noutput = output.replace(/([^\\n])?(https?:\\/\\/[^\\s]+)/g, (match, p, url) => {\n  return (p ? p.trim() + '\\n' : '') + url;\n});\n\n// ✅ 4. 多重換行壓縮為單一換行\noutput = output.replace(/\\n{2,}/g, '\\n');\n\n// ✅ 5. 去除前後空白\noutput = output.trim();\n\nreturn [{\n  json: {\n    reply: output\n  }\n}];\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -308,7 +295,7 @@
         "promptType": "define",
         "text": "={{ $json.prompt }}",
         "options": {
-          "systemMessage": "不用傳送思考紀錄、根據內容、使用者問題，模糊搜尋後，直接告訴答案就好,\n如果找不到相關問題，回傳找不到相關的內容，請換個說法或確認資料庫,\n幫我判斷重要部分並標粗,\n美化展現格式,\n自主判斷換行，分段，標點符號,"
+          "systemMessage": "不用傳送思考紀錄、根據內容、使用者問題，模糊搜尋後，直接告訴答案就好,\n如果找不到相關問題，回傳找不到相關的內容，請換個說法或確認資料庫,\n如果有多筆符合內容，需要都列出來,\n自主判斷換行，分段，標點符號,"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -371,6 +358,19 @@
           "name": "Google Gemini(PaLM) Api account"
         }
       }
+    },
+    {
+      "parameters": {
+        "jsCode": "const options = items.map(item => {\n  const listName = item.json[\"List\"] || \"未命名\";\n  return `<option value=\"${listName}\">${listName}</option>`;\n}).join('');\n\n// 正確轉換 markdown 的 function（修正空格 + 支援連結）\nfunction markdownToHtml(md) {\n  return md\n    .replace(/\\*\\*(.*?)\\*\\*/g, '<strong>$1</strong>') // 粗體\n    .replace(/\\[([^\\]]+)\\]\\((https?:\\/\\/[^\\)]+)\\)/g, '<a href=\"$2\" target=\"_blank\">$1</a>') // markdown 連結\n    .replace(/(https?:\\/\\/[^\\s]+)/g, '<a href=\"$1\" target=\"_blank\">$1</a>') // 裸連結\n    .replace(/\\n/g, '<br>'); // 換行\n}\n\nreturn [{\n  json: {\n    html: `<!DOCTYPE html>\n<html lang=\"zh-Hant\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <title>Chat 聊天 UI</title>\n    <style>\n      body { font-family: sans-serif; max-width: 600px; margin: 2rem auto; }\n      #messages {\n        border: 1px solid #ccc;\n        padding: 1rem;\n        height: 300px;\n        overflow-y: auto;\n        margin-bottom: 1rem;\n        background: #f9f9f9;\n      }\n      .msg { margin: 0.5rem 0; }\n      .user { text-align: right; color: blue; }\n      .bot { text-align: left; color: green; }\n      select, input[type=\"text\"] {\n        width: 100%;\n        padding: 0.5rem;\n        font-size: 1rem;\n        margin-bottom: 0.5rem;\n      }\n    </style>\n  </head>\n  <body>\n    <h2>聊天介面</h2>\n    <select id=\"listSelector\">\n      ${options}\n    </select>\n    <div id=\"messages\"></div>\n    <input type=\"text\" id=\"input\" placeholder=\"輸入訊息後按 Enter\" autocomplete=\"off\" autofocus />\n\n    <script>\n      const input = document.getElementById('input');\n      const messages = document.getElementById('messages');\n      const listSelector = document.getElementById('listSelector');\n\n      function scrollToBottom() {\n        messages.scrollTop = messages.scrollHeight;\n      }\n\n      function markdownToHtml(md) {\n        return md\n          .replace(/\\\\*\\\\*(.*?)\\\\*\\\\*/g, '<strong>$1</strong>')\n          .replace(/\\\\[([^\\\\]]+)\\\\]\\\\((https?:\\\\/\\\\/[^\\\\)]+)\\\\)/g, '<a href=\"$2\" target=\"_blank\">$1</a>')\n          .replace(/(https?:\\\\/\\\\/[^\\\\s]+)/g, '<a href=\"$1\" target=\"_blank\">$1</a>')\n          .replace(/\\\\n/g, '<br>');\n      }\n\n      input.addEventListener('keydown', async (e) => {\n        if (e.key === 'Enter') {\n          const text = input.value.trim();\n          const selected = listSelector.value;\n          if (!text) return;\n          input.value = '';\n          messages.innerHTML += '<div class=\"msg user\">[' + selected + '] ' + text + '</div>';\n          scrollToBottom();\n\n          try {\n            const res = await fetch('/webhook/chatbox-input', {\n              method: 'POST',\n              headers: { 'Content-Type': 'application/json' },\n              body: JSON.stringify({\n                input: text,\n                category: selected\n              })\n            });\n\n            const data = await res.json();\n            messages.innerHTML += '<div class=\"msg bot\">' + markdownToHtml(data.reply) + '</div>';\n            scrollToBottom();\n          } catch (err) {\n            messages.innerHTML += '<div class=\"msg bot\">⚠️ 系統錯誤</div>';\n            console.error(err);\n            scrollToBottom();\n          }\n        }\n      });\n    </script>\n  </body>\n</html>`\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -340,
+        -240
+      ],
+      "id": "0af58eac-c904-4075-a756-cc44d828ede5",
+      "name": "Code"
     }
   ],
   "pinData": {},
@@ -397,6 +397,6 @@
     }
   ],
   "triggerCount": 2,
-  "updatedAt": "2025-06-10T01:12:13.000Z",
-  "versionId": "c94aef1e-c0bb-43c2-8f91-d8edf14f72b5"
+  "updatedAt": "2025-06-17T06:38:20.000Z",
+  "versionId": "b0ec704d-420c-40d5-8f6f-85e66c369dca"
 }
