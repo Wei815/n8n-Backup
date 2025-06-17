@@ -27,7 +27,7 @@
       "main": [
         [
           {
-            "node": "List",
+            "node": "Jira專案鏈結",
             "type": "main",
             "index": 0
           }
@@ -50,17 +50,6 @@
         [
           {
             "node": "Code",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "List": {
-      "main": [
-        [
-          {
-            "node": "Code2",
             "type": "main",
             "index": 0
           }
@@ -93,6 +82,17 @@
           }
         ]
       ]
+    },
+    "Jira專案鏈結": {
+      "main": [
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-06-04T03:04:13.456Z",
@@ -112,6 +112,7 @@
           "mode": "list",
           "cachedResultName": "n8ntestnew"
         },
+        "embeddingBatchSize": 1000,
         "options": {
           "pineconeNamespace": "={{ $json.Namespace }}"
         }
@@ -153,13 +154,13 @@
     {
       "parameters": {
         "jsonMode": "expressionData",
-        "jsonData": "={{ $json.List }}:{{ $json['簡介'] }}",
+        "jsonData": "={{ $json.專案名稱 }}:{{ $json['鏈結'] }}",
         "options": {
           "metadata": {
             "metadataValues": [
               {
                 "name": "Key Points",
-                "value": "={{ $json.List }}"
+                "value": "={{ $json.專案名稱 }}"
               }
             ]
           }
@@ -279,49 +280,16 @@
     },
     {
       "parameters": {
-        "jsCode": "return items.map(item => ({\n  json: {\n    Namespace:'List',\n    ID:item.json[\"row_number\"]-1,\n    List: item.json[\"List\"],\n    簡介: item.json[\"簡介\"]\n  }\n}));"
+        "jsCode": "return items.map(item => ({\n  json: {\n    Namespace:'Jira_Link',\n    ID:item.json[\"row_number\"]-1,\n    專案名稱: item.json[\"專案名稱\"],\n    鏈結: item.json[\"鏈結\"]\n  }\n}));"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
         -820,
-        -140
+        -120
       ],
       "id": "4dba8bdd-9561-4cc8-b952-8f0aa9454849",
       "name": "Code2"
-    },
-    {
-      "parameters": {
-        "documentId": {
-          "__rl": true,
-          "value": "1G0fRsIhGUIHS82bm43Q7cj-cNaa5bt_dne1uBaR5bzk",
-          "mode": "list",
-          "cachedResultName": "AI知識庫",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1G0fRsIhGUIHS82bm43Q7cj-cNaa5bt_dne1uBaR5bzk/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": 408462775,
-          "mode": "list",
-          "cachedResultName": "SheetList",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1G0fRsIhGUIHS82bm43Q7cj-cNaa5bt_dne1uBaR5bzk/edit#gid=408462775"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.6,
-      "position": [
-        -1040,
-        -140
-      ],
-      "id": "d310655b-f9ca-4cbc-8e3f-3601452aa163",
-      "name": "List",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "Z5q1lrN1CgiD0Rb8",
-          "name": "Google Sheets account"
-        }
-      }
     },
     {
       "parameters": {
@@ -335,6 +303,39 @@
       ],
       "id": "9d9dcb41-f9fd-4ec9-b67c-9397c6aa2308",
       "name": "Recursive Character Text Splitter"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1G0fRsIhGUIHS82bm43Q7cj-cNaa5bt_dne1uBaR5bzk",
+          "mode": "list",
+          "cachedResultName": "AI知識庫",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1G0fRsIhGUIHS82bm43Q7cj-cNaa5bt_dne1uBaR5bzk/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1874167723,
+          "mode": "list",
+          "cachedResultName": "Jira專案鏈結",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1G0fRsIhGUIHS82bm43Q7cj-cNaa5bt_dne1uBaR5bzk/edit#gid=1874167723"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -1020,
+        -120
+      ],
+      "id": "d310655b-f9ca-4cbc-8e3f-3601452aa163",
+      "name": "Jira專案鏈結",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Z5q1lrN1CgiD0Rb8",
+          "name": "Google Sheets account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -351,6 +352,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2025-06-09T01:42:30.000Z",
-  "versionId": "18697e77-531c-4036-9629-5e57c8ba32f4"
+  "updatedAt": "2025-06-17T05:39:16.000Z",
+  "versionId": "c6d5577e-90df-482e-b0a4-aeb6e2a83cf3"
 }
